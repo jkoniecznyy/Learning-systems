@@ -1,2 +1,4 @@
+from src.decision_tree import decision_tree
+
 if __name__ == '__main__':
-    print('Hi')
+    decision_tree()
