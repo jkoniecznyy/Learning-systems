@@ -4,9 +4,9 @@ from src.utils import *
 
 if __name__ == '__main__':
     data = read_file('data/gielda.txt')
-    # data = read_file('data/test2.txt')
-    # data = read_file('data/breast-cancer.data')
-    # print(f'data = {data}')
+    # occurrences = read_file('occurrences/test2.txt')
+    # occurrences = read_file('occurrences/breast-cancer.occurrences')
+    # print(f'occurrences = {occurrences}')
     decision_tree(data)
-    # tree = Tree(data)
+    # tree = Tree(occurrences)
     # tree.build_tree()
