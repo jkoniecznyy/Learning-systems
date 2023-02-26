@@ -4,71 +4,62 @@ from src.utils import *
 from collections import Counter
 
 
-def calculate_unique_values(data: list[list[str]]) -> list[int]:
-    """ Returns the number of unique values for each attribute """
-    unique_values = []
-    for column in zip(*data):
-        unique_values.append(len(set(column)))
-    return unique_values
-
-
-def calculate_unique_values2(data: list[list[str]]) -> list[int]:
-    """ Returns the number of unique attribute """
+def get_values(data: list[list[str]]) -> list[int]:
+    """
+    Returns how many values there are for each attribute
+    for example: [3, 2, 2, 2]
+    """
     return [len(set(column)) for column in zip(*data)]
 
 
-def calculate_different_occurrences(data: list[list[str]]) -> list[dict[str, int]]:
-    """ Returns number of different occurrences for each attribute """
-    different_occurrences = []
-    for column in zip(*data):
-        different_occurrences.append(dict(Counter(column)))
-    return different_occurrences
-
-
-def calculate_different_occurrences2(data: list[list[str]]) -> list[dict[str, int]]:
-    """ Returns number of different occurrences of attributes """
+def get_occurrences(data: list[list[str]]) -> list[dict[str, int]]:
+    """
+    Returns how many times each value occurs
+    for example: [{'old': 3, 'mid': 4, 'new': 3}, {'yes': 4, 'no': 6}]
+    """
     return [dict(Counter(column)) for column in zip(*data)]
 
 
-def calculate_probabilities(occurrences: list[dict[str, int]]):
-    """ Returns the probability for each attribute  """
-    probabilities = []
-    for column in occurrences:
+def get_probabilities(data: list[dict[str, int]]) -> list[list[float]]:
+    """
+    Returns the probability for each value
+    for example: [[0.3, 0.4, 0.3], [0.4, 0.6]]
+    """
+    all_probabilities = []
+    for column in data:
         probability = []
         for attribute in column.values():
             probability.append(attribute / sum(column.values()))
-        probabilities.append(probability)
-
-    return probabilities
-
-
-def calculate_probabilities2(occurrences: list[dict[str, int]]):
-    """ Returns the probability for each attribute  """
-    return [[attribute / sum(column.values()) for attribute in column.values()] for column in occurrences]
+        all_probabilities.append(probability)
+    return all_probabilities
 
 
-def calculate_entropy(probability: list[list[float]]) -> float:
-    """ Returns the entropy  """
-    return -sum([p * log2(p) for p in probability[-1] if p != 0])
+def calculate_entropy(data: list[float]) -> float:
+    """
+    Returns the entropy for a given list of probabilities
+    for example: 0.5
+    """
+    print('calculate_entropy', data)
+    return -(sum([p * log2(p) for p in data if p != 0]))
 
 
-def calculate_information(data: list[list[str]], unique_values: list[int], occurrences) -> list[float]:
+def get_entropy(data: list[list[float]]) -> float:
+    """
+    Returns the entropy value for the last attribute from data
+    for example: 0.5
+    """
+    print('data', data)
+    print('data[-1]', data[-1])
+    print('get_entropy', data)
+    return calculate_entropy(data[-1])
+
+
+def calculate_information2(data: list[list[str]], values: list[int], occurrences) -> list[float]:
     """ Returns information """
+    values = get_values(data)
+    occurrences = get_occurrences(data)
     information = []
-    for index in range(len(unique_values) - 1):
-        class_information = 0
-        for attribute in occurrences[index].keys():
-            class_values = [row for row in data if row[index] == attribute]
-            class_probabilities = calculate_probabilities2(calculate_different_occurrences2(class_values))
-            class_information += len(class_values) / len(data) * calculate_entropy(class_probabilities)
-        information.append(class_information)
-    return information
-
-
-def calculate_information2(data: list[list[str]], unique_values: list[int], occurrences) -> list[float]:
-    """ Returns information """
-    information = []
-    for index in range(len(unique_values) - 1):
+    for index in range(len(values) - 1):
         class_information = 0
         for attribute in occurrences[index].keys():
             class_information = calculate_class_information(data, class_information, attribute, index)
@@ -78,30 +69,100 @@ def calculate_information2(data: list[list[str]], unique_values: list[int], occu
 
 def calculate_class_information(data: list[list[str]], class_information, attribute, index) -> list[float]:
     """ Returns class information """
+    print('calculate_class_information', data, class_information, attribute, index)
     class_values = [row for row in data if row[index] == attribute]
-    class_probabilities = calculate_probabilities2(calculate_different_occurrences2(class_values))
-    class_information += len(class_values) / len(data) * calculate_entropy(class_probabilities)
+
+    occurrences = get_occurrences(class_values)
+    class_probabilities = get_probabilities(occurrences)
+    entropy = get_entropy(class_probabilities)
+
+    class_information += len(class_values) / len(data) * entropy
     return class_information
 
 
-def decision_tree():
-    data = read_file('data/gielda.txt')
-    # data = read_file('data/test2.txt')
-    # data = read_file('data/breast-cancer.data')
-    # print(f'data = {data}')
-    unique_values = calculate_unique_values2(data)
-    # print(f'cc2 = {cc2}')
-    different_occurrences = calculate_different_occurrences2(data)
-    # print(f'listcomp = {oc2}')
-    # p1 = calculate_probabilities(oc2)
+def calculate_gain(entropy: float, info: list[float]) -> list[float]:
+    """
+    Compute the information gain for all attribute classes
+    """
+    return [(entropy - attribute) for attribute in info]
+
+
+def calculate_split_info(attribute_index: int, probabilities: list[list[float]]) -> float:
+    """
+    Compute the split information, i.e. calculate the entropy for each attribute
+    """
+    return calculate_entropy(probabilities[attribute_index])
+
+
+def calculate_gain_ratio(gain: list[float], split_info: list[float]) -> list[float]:
+    """
+    Balance the disproportions
+    """
+    return [
+        (gain[attribute] / split_info[attribute]) if split_info[attribute] > 0 else 0
+        for attribute in range(len(gain))
+    ]
+
+
+def find_best_attribute(gain_ratio: list[float]) -> int:
+    """
+    Selection of the attribute according to which the division will be made in the decision tree.
+    The function returns the index of the attribute class.
+    """
+    return gain_ratio.index(max(gain_ratio))
+
+
+def decision_tree(data, prev=-1):
+    values = get_values(data)
+    print(f'values = {values}')
+    occurrences = get_occurrences(data)
+    print(f'occurrences = {occurrences}')
+    # p1 = get_probabilities(occurrences)
     # print(f'p1 = {p1}')
-    p2 = calculate_probabilities2(different_occurrences)
-    print(f'p2 = {p2}')
-    entropy = calculate_entropy(p2)
+    probabilities = get_probabilities(occurrences)
+    print(f'probabilities = {probabilities}')
+    entropy = calculate_entropy(probabilities[-1])
     print(f'entropy = {entropy}')
-    # info2 = calculate_information(data, unique_values, different_occurrences)
-    # print(f'info2 = {info2}')
-    info3 = calculate_information2(data, unique_values, different_occurrences)
-    print(f'info3 = {info3}')
+    information = calculate_information2(data, values, occurrences)
+    print(f'information = {information}')
+    # gain = calculate_gain(entropy, info)
+    # print(f'gain = {gain}')
+
+    # split_info = [
+    #     calculate_split_info(index, p2) for index in range(len(values) - 1)
+    # ]
+    # gain_ratio = calculate_gain_ratio(gain, split_info)
+    #
+    # max_gain_ratio = max(gain_ratio)
+    # best_attribute = find_best_attribute(gain_ratio)
+    # margin = "\t"
+    # if max_gain_ratio > 0:  # warunek stopu
+    #     if prev != -1:
+    #         print("1")
+    #         print(
+    #             f"{margin}"
+    #             f"{print_attribute_value(occurrences, prev)} --> Atrybut: {best_attribute + 1} "
+    #         )
+    #     else:
+    #         print("2")
+    #         print(
+    #             f"Atrybut: {best_attribute + 1}"
+    #         )
+    #
+    #     prev = best_attribute
+    #     margin += "\t"
+    #     new_data = [
+    #         [x for x in data if x[best_attribute] == key]
+    #         for key in occurrences[best_attribute]
+    #     ]
+    #
+    #     for subset in new_data:
+    #         decision_tree(subset, prev, )
+    # else:
+    #     print("3")
+    #     print(
+    #         f"{margin}{print_attribute_value(occurrences, prev)} --> Decyzja: "
+    #         f"{print_decision(occurrences, data)}"
+    #     )
 
     return 0
