@@ -7,8 +7,8 @@ MARGIN = '\t'
 def get_values(data: list[list[str]]) -> list[int]:
     """
     Returns how many values there are for each attribute
-    input: [['old', 'yes', 'swr', 'down'], ...]
-    output: [3, 2, 2, 2]
+    input: [['old', ...], [['mid', ...], [['new', ...]]
+    output: [3, ...]
     """
     return [len(set(column)) for column in zip(*data)]
 
@@ -39,7 +39,7 @@ def get_probabilities(occurrences: list[dict[str, int]]) -> list[list[float]]:
 
 def get_entropy(probabilities: list[float]) -> float:
     """
-    Returns the entropy for a given list of probabilities
+    Returns the entropy for every attribute
     input: [0.5, 0.5]
     output: 1.0
     """
@@ -65,7 +65,7 @@ def calculate_class_information(data: list[list[str]], attribute: str, index: in
 
 def get_information(data: list[list[str]], occurrences: list[dict[str, int]]) -> list[float]:
     """
-    Returns the information for every attribute
+    Returns the information of the attributes (cuts off the decision attribute)
     input:
         data = [['old', 'yes', 'swr', 'down'], ...]
         occurrences = [{'old': 3, 'mid': 4, 'new': 3}, ...]
@@ -160,8 +160,8 @@ def print_leaf(data: list[list[str]], occurrences:  list[dict[str, int]],
     """ Prints the leaf of the decision tree """
     print(
         f'{MARGIN * level} '
-        f'{list(occurrences[parent_attribute].keys())[0]} -> D: '
-        f'{list(occurrences[len(data[0]) - 1].keys())[0]}'
+        f'{list(occurrences[parent_attribute].keys())[0]} '
+        f'-> D: {list(occurrences[len(data[0]) - 1].keys())[0]}'
     )
 
 
