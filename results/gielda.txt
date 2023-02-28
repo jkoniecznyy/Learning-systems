@@ -1,0 +1,6 @@
+ Atrybut: 1
+	 old -> D: down
+	 mid->Atrybut: 2
+		 yes -> D: down
+		 no -> D: up
+	 new -> D: up

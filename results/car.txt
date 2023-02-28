@@ -1,0 +1,406 @@
+ Atrybut: 6
+	 low -> D: unacc
+	 med->Atrybut: 4
+		 2 -> D: unacc
+		 4->Atrybut: 1
+			 vhigh->Atrybut: 2
+				 vhigh -> D: unacc
+				 high -> D: unacc
+				 med->Atrybut: 5
+					 small -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: unacc
+						 4 -> D: acc
+						 5more -> D: acc
+					 big -> D: acc
+				 low->Atrybut: 5
+					 small -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: unacc
+						 4 -> D: acc
+						 5more -> D: acc
+					 big -> D: acc
+			 high->Atrybut: 5
+				 small -> D: unacc
+				 med->Atrybut: 3
+					 2 -> D: unacc
+					 3 -> D: unacc
+					 4->Atrybut: 2
+						 vhigh -> D: unacc
+						 high -> D: acc
+						 med -> D: acc
+						 low -> D: acc
+					 5more->Atrybut: 2
+						 vhigh -> D: unacc
+						 high -> D: acc
+						 med -> D: acc
+						 low -> D: acc
+				 big->Atrybut: 2
+					 vhigh -> D: unacc
+					 high -> D: acc
+					 med -> D: acc
+					 low -> D: acc
+			 med->Atrybut: 2
+				 vhigh->Atrybut: 5
+					 small -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: unacc
+						 4 -> D: acc
+						 5more -> D: acc
+					 big -> D: acc
+				 high->Atrybut: 5
+					 small -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: unacc
+						 4 -> D: acc
+						 5more -> D: acc
+					 big -> D: acc
+				 med -> D: acc
+				 low->Atrybut: 5
+					 small -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: acc
+						 4 -> D: good
+						 5more -> D: good
+					 big -> D: good
+			 low->Atrybut: 2
+				 vhigh->Atrybut: 5
+					 small -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: unacc
+						 4 -> D: acc
+						 5more -> D: acc
+					 big -> D: acc
+				 high -> D: acc
+				 med->Atrybut: 5
+					 small -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: acc
+						 4 -> D: good
+						 5more -> D: good
+					 big -> D: good
+				 low->Atrybut: 5
+					 small -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: acc
+						 4 -> D: good
+						 5more -> D: good
+					 big -> D: good
+		 more->Atrybut: 5
+			 small->Atrybut: 1
+				 vhigh -> D: unacc
+				 high -> D: unacc
+				 med->Atrybut: 2
+					 vhigh -> D: unacc
+					 high -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 low->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+				 low->Atrybut: 2
+					 vhigh -> D: unacc
+					 high->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 low->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+			 med->Atrybut: 1
+				 vhigh->Atrybut: 2
+					 vhigh -> D: unacc
+					 high -> D: unacc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 low->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+				 high->Atrybut: 2
+					 vhigh -> D: unacc
+					 high->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 low->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+				 med->Atrybut: 2
+					 vhigh->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 high->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 med -> D: acc
+					 low->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+				 low->Atrybut: 2
+					 vhigh->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 high -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+					 low->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+			 big->Atrybut: 1
+				 vhigh->Atrybut: 2
+					 vhigh -> D: unacc
+					 high -> D: unacc
+					 med -> D: acc
+					 low -> D: acc
+				 high->Atrybut: 2
+					 vhigh -> D: unacc
+					 high -> D: acc
+					 med -> D: acc
+					 low -> D: acc
+				 med->Atrybut: 2
+					 vhigh -> D: acc
+					 high -> D: acc
+					 med -> D: acc
+					 low -> D: good
+				 low->Atrybut: 2
+					 vhigh -> D: acc
+					 high -> D: acc
+					 med -> D: good
+					 low -> D: good
+	 high->Atrybut: 4
+		 2 -> D: unacc
+		 4->Atrybut: 1
+			 vhigh->Atrybut: 2
+				 vhigh -> D: unacc
+				 high -> D: unacc
+				 med -> D: acc
+				 low -> D: acc
+			 high->Atrybut: 2
+				 vhigh -> D: unacc
+				 high -> D: acc
+				 med -> D: acc
+				 low -> D: acc
+			 med->Atrybut: 2
+				 vhigh -> D: acc
+				 high -> D: acc
+				 med->Atrybut: 5
+					 small -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: acc
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 low->Atrybut: 5
+					 small -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: good
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+			 low->Atrybut: 2
+				 vhigh -> D: acc
+				 high->Atrybut: 5
+					 small -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: acc
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 med->Atrybut: 5
+					 small -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: good
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 low->Atrybut: 5
+					 small -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: good
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+		 more->Atrybut: 1
+			 vhigh->Atrybut: 2
+				 vhigh -> D: unacc
+				 high -> D: unacc
+				 med->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 low->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+			 high->Atrybut: 2
+				 vhigh -> D: unacc
+				 high->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 med->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 low->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+			 med->Atrybut: 2
+				 vhigh->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 high->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 med->Atrybut: 5
+					 small->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: vgood
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 low->Atrybut: 5
+					 small->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: vgood
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+			 low->Atrybut: 2
+				 vhigh->Atrybut: 3
+					 2->Atrybut: 5
+						 small -> D: unacc
+						 med -> D: acc
+						 big -> D: acc
+					 3 -> D: acc
+					 4 -> D: acc
+					 5more -> D: acc
+				 high->Atrybut: 5
+					 small->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: acc
+						 4 -> D: acc
+						 5more -> D: acc
+					 med->Atrybut: 3
+						 2 -> D: acc
+						 3 -> D: vgood
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 med->Atrybut: 5
+					 small->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: vgood
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood
+				 low->Atrybut: 5
+					 small->Atrybut: 3
+						 2 -> D: unacc
+						 3 -> D: good
+						 4 -> D: good
+						 5more -> D: good
+					 med->Atrybut: 3
+						 2 -> D: good
+						 3 -> D: vgood
+						 4 -> D: vgood
+						 5more -> D: vgood
+					 big -> D: vgood

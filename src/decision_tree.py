@@ -1,6 +1,7 @@
 from math import log2
-
 from collections import Counter
+
+MARGIN = '\t'
 
 
 def get_values(data: list[list[str]]) -> list[int]:
@@ -45,27 +46,26 @@ def get_entropy(probabilities: list[float]) -> float:
     return -(sum([p * log2(p) for p in probabilities if p != 0]))
 
 
-def calculate_class_information(data: list[list[str]], class_information: list[float],
-                                attribute: str, index: int) -> list[float]:
-    """ Calculates the information for a given attribute """
-    print(f'attribute = {attribute}')
-    print(f'index = {index}')
-    # print(f'data = {data}')
-    # print()
+def calculate_class_information(data: list[list[str]], attribute: str, index: int) -> float:
+    """
+    Returns the class information for a given attribute
+    input:
+        data = [['old', 'yes', 'swr', 'down'], ...]
+        attribute = old
+        index = 0
+    output:
+        0.0
+    """
     class_values = [row for row in data if row[index] == attribute]
     occurrences = get_occurrences(class_values)
     class_probabilities = get_probabilities(occurrences)
     entropy = get_entropy(class_probabilities[-1])
-    print("class_information = ", class_information)
-    print("+= ", len(class_values) / len(data) * entropy)
-    class_information += len(class_values) / len(data) * entropy
-    print("class_information = ", class_information)
-    return class_information
+    return len(class_values) / len(data) * entropy
 
 
 def get_information(data: list[list[str]], occurrences: list[dict[str, int]]) -> list[float]:
     """
-    Returns information
+    Returns the information for every attribute
     input:
         data = [['old', 'yes', 'swr', 'down'], ...]
         occurrences = [{'old': 3, 'mid': 4, 'new': 3}, ...]
@@ -76,7 +76,7 @@ def get_information(data: list[list[str]], occurrences: list[dict[str, int]]) ->
     for index in range(len(occurrences) - 1):
         class_information = 0
         for attribute in occurrences[index].keys():
-            class_information = calculate_class_information(data, class_information, attribute, index)
+            class_information += calculate_class_information(data, attribute, index)
         information.append(class_information)
     return information
 
@@ -89,11 +89,9 @@ def get_split_information(probabilities: list[list[float]]) -> list[float]:
     output:
         split_information = [1.570..., 0.970..., 0.970...]
     """
-    print('probabilities = ', probabilities)
     split_information = []
     for index in range(len(probabilities) - 1):
         split_information.append(get_entropy(probabilities[index]))
-    print('split_information = ', split_information)
     return split_information
 
 
@@ -127,21 +125,70 @@ def get_gain_ratio(gain: list[float], split_info: list[float]) -> list[float]:
     return gain_ratio
 
 
-def decision_tree(data, prev=-1):
-    values = get_values(data)
+def organize_data_by_attribute(data: list[list[str]], occurrences: list[dict[str, int]],
+                               parent_attribute: int) -> list[list[list[str]]]:
+    """
+    Organizes the data into a list of lists, where each list contains the data for a specific attribute
+    input:
+        data = [['old', 'yes', 'swr', 'down'], ['old', 'no', 'swr', 'down'], ['mid', 'yes', 'swr', 'down']]
+        occurrences = [{'old': 2, 'mid': 1}, {'yes': 2, 'no': 1}, {'swr': 3}, {'down': 3}]
+        parent_attribute = 0 (old/mid)
+    output:
+        new_data = [[['old', 'yes', 'swr', 'down'], ['old', 'no', 'swr', 'down']], [['mid', 'yes', 'swr', 'down']]]
+    """
+    organized_data = []
+    for attribute in occurrences[parent_attribute]:
+        organized_data.append(
+            [d for d in data if d[parent_attribute] == attribute]
+        )
+    return organized_data
+
+
+def print_node(occurrences, parent_attribute: int, child_attribute: int, level: int) -> None:
+    """ Prints the node of the decision tree """
+    if parent_attribute < 0:
+        print(f'{MARGIN * level} '
+              f'Atrybut: {child_attribute + 1}')
+    else:
+        print(f'{MARGIN * level} '
+              f'{list(occurrences[parent_attribute].keys())[0]} '
+              f'-> Atrybut: {child_attribute + 1}')
+
+
+def print_leaf(data: list[list[str]], occurrences:  list[dict[str, int]],
+               parent_attribute: int, level: int) -> None:
+    """ Prints the leaf of the decision tree """
+    print(
+        f'{MARGIN * level} '
+        f'{list(occurrences[parent_attribute].keys())[0]} -> D: '
+        f'{list(occurrences[len(data[0]) - 1].keys())[0]}'
+    )
+
+
+def build_decision_tree(data: list[list[str]], parent_attribute: int = -1, level: int = 0) -> None:
+    """
+    Builds the decision tree
+    """
     occurrences = get_occurrences(data)
     probabilities = get_probabilities(occurrences)
-
     entropy = get_entropy(probabilities[-1])
     information = get_information(data, occurrences)
     # print(f'information = {information}')
     gain = get_gain(information, entropy)
     # print(f'gain = {gain}')
-
     split_information = get_split_information(probabilities)
     # print(f'split_info = {split_information}')
-
     gain_ratio = get_gain_ratio(gain, split_information)
     # print(f'gain_ratio = {gain_ratio}')
+    child_attribute = gain_ratio.index(max(gain_ratio))
 
-    best_attribute = gain_ratio.index(max(gain_ratio))
+    if max(gain_ratio) > 0:
+        print_node(occurrences, parent_attribute, child_attribute, level)
+        level += 1
+        parent_attribute = child_attribute
+        organized_data = organize_data_by_attribute(data, occurrences, parent_attribute)
+
+        for data_part in organized_data:
+            build_decision_tree(data_part, parent_attribute, level)
+    else:
+        print_leaf(data, occurrences, parent_attribute, level)
